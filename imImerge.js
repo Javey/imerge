@@ -10,7 +10,7 @@ Q.denodeify(fs.readJSONFile)('/home/music/Workspace/M3DImerge/test/imerge/sprite
     .then(function(config) {
             root = '/home/music/Workspace/M3DImerge/test';
         _.each(config, function(value, merge) {
-            if (merge === 'float') {
+            if (merge === 'common') {
                 var promises = [],
                     imageList = [];
                 _.each(value, function(conf, path) {
@@ -19,9 +19,13 @@ Q.denodeify(fs.readJSONFile)('/home/music/Workspace/M3DImerge/test/imerge/sprite
                     promises.push(image.init());
                 });
                 Q.all(promises).then(function() {
-                    drawSprite(imageList).then(function(canvas) {
+                    return drawSprite(imageList).then(function(canvas) {
                         fs.writeFile('/home/music/Workspace/M3DImerge/src/sprite_' + merge + '.png', canvas.toBuffer());
+                    }).then(function() {
+                        fs.writeJSONFile('/home/music/Workspace/M3DImerge/src/sprite_' + merge + '.json', imageList);
                     })
+                }).catch(function() {
+                    console.log(arguments);
                 });
             }
         });

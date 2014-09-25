@@ -1,0 +1,37 @@
+[
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/search/not-found.png",
+    "config": {
+      "padding-top": 0,
+      "padding-right": 0,
+      "padding-bottom": 0,
+      "padding-left": 0,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 75,
+    "oriHeight": 183,
+    "width": 75,
+    "height": 183,
+    "float": "none",
+    "fit": {
+      "x": 0,
+      "y": 0,
+      "width": 75,
+      "height": 183,
+      "used": true,
+      "down": {
+        "x": 0,
+        "y": 183,
+        "width": 75,
+        "height": 0
+      },
+      "right": {
+        "x": 75,
+        "y": 0,
+        "width": 0,
+        "height": 183
+      }
+    }
+  }
+]

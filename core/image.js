@@ -41,7 +41,15 @@ ImImage.prototype = {
             width = this.oriWidth + config['padding-left'] + config['padding-right'],
             height = this.oriHeight + config['padding-top'] + config['padding-bottom'];
 
+        var float = config['float'];
+//        if (float === 'left' || float === 'right') {
+//            width = 'unknown';
+//        } else if (float === 'top' || float === 'bottom') {
+//            height = 'unknown';
+//        }
+
         this.width = width;
         this.height = height;
+        this.float = float;
     }
 };

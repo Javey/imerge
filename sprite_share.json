@@ -1,0 +1,273 @@
+[
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/weibo.png",
+    "config": {
+      "padding-top": 4,
+      "padding-right": 10,
+      "padding-bottom": 4,
+      "padding-left": 10,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 21,
+    "oriHeight": 17,
+    "width": 41,
+    "height": 25,
+    "float": "none",
+    "fit": {
+      "x": 0,
+      "y": 0,
+      "width": 41,
+      "height": 25,
+      "used": true,
+      "down": {
+        "x": 0,
+        "y": 25,
+        "width": 41,
+        "height": 0
+      },
+      "right": {
+        "x": 41,
+        "y": 0,
+        "width": 0,
+        "height": 25
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/weixin.png",
+    "config": {
+      "padding-top": 4,
+      "padding-right": 10,
+      "padding-bottom": 4,
+      "padding-left": 10,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 20,
+    "oriHeight": 16,
+    "width": 40,
+    "height": 24,
+    "float": "none",
+    "fit": {
+      "x": 41,
+      "y": 0,
+      "width": 40,
+      "height": 25,
+      "used": true,
+      "down": {
+        "x": 41,
+        "y": 24,
+        "width": 40,
+        "height": 1
+      },
+      "right": {
+        "x": 81,
+        "y": 0,
+        "width": 0,
+        "height": 24
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/qzone.png",
+    "config": {
+      "padding-top": 4,
+      "padding-right": 10,
+      "padding-bottom": 4,
+      "padding-left": 10,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 17,
+    "oriHeight": 16,
+    "width": 37,
+    "height": 24,
+    "float": "none",
+    "fit": {
+      "x": 0,
+      "y": 25,
+      "width": 81,
+      "height": 24,
+      "used": true,
+      "down": {
+        "x": 0,
+        "y": 49,
+        "width": 81,
+        "height": 0
+      },
+      "right": {
+        "x": 37,
+        "y": 25,
+        "width": 44,
+        "height": 24
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/weibo-big.png",
+    "config": {
+      "padding-top": 0,
+      "padding-right": 0,
+      "padding-bottom": 0,
+      "padding-left": 0,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 36,
+    "oriHeight": 36,
+    "width": 36,
+    "height": 36,
+    "float": "none",
+    "fit": {
+      "x": 81,
+      "y": 0,
+      "width": 36,
+      "height": 49,
+      "used": true,
+      "down": {
+        "x": 81,
+        "y": 36,
+        "width": 36,
+        "height": 13,
+        "used": true,
+        "down": {
+          "x": 81,
+          "y": 44,
+          "width": 36,
+          "height": 5
+        },
+        "right": {
+          "x": 91,
+          "y": 36,
+          "width": 26,
+          "height": 8
+        }
+      },
+      "right": {
+        "x": 117,
+        "y": 0,
+        "width": 0,
+        "height": 36
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/weixin-big.png",
+    "config": {
+      "padding-top": 0,
+      "padding-right": 0,
+      "padding-bottom": 0,
+      "padding-left": 0,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 36,
+    "oriHeight": 36,
+    "width": 36,
+    "height": 36,
+    "float": "none",
+    "fit": {
+      "x": 0,
+      "y": 49,
+      "width": 117,
+      "height": 36,
+      "used": true,
+      "down": {
+        "x": 0,
+        "y": 85,
+        "width": 117,
+        "height": 0
+      },
+      "right": {
+        "x": 36,
+        "y": 49,
+        "width": 81,
+        "height": 36,
+        "used": true,
+        "down": {
+          "x": 36,
+          "y": 85,
+          "width": 81,
+          "height": 0
+        },
+        "right": {
+          "x": 72,
+          "y": 49,
+          "width": 45,
+          "height": 36
+        }
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/qzone-big.png",
+    "config": {
+      "padding-top": 0,
+      "padding-right": 0,
+      "padding-bottom": 0,
+      "padding-left": 0,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 36,
+    "oriHeight": 36,
+    "width": 36,
+    "height": 36,
+    "float": "none",
+    "fit": {
+      "x": 36,
+      "y": 49,
+      "width": 81,
+      "height": 36,
+      "used": true,
+      "down": {
+        "x": 36,
+        "y": 85,
+        "width": 81,
+        "height": 0
+      },
+      "right": {
+        "x": 72,
+        "y": 49,
+        "width": 45,
+        "height": 36
+      }
+    }
+  },
+  {
+    "file": "/home/music/Workspace/M3DImerge/test/static/image/icon/share/arrow-down.png",
+    "config": {
+      "padding-top": 0,
+      "padding-right": 0,
+      "padding-bottom": 0,
+      "padding-left": 0,
+      "float": "none",
+      "repeat": "none"
+    },
+    "oriWidth": 10,
+    "oriHeight": 8,
+    "width": 10,
+    "height": 8,
+    "float": "none",
+    "fit": {
+      "x": 81,
+      "y": 36,
+      "width": 36,
+      "height": 13,
+      "used": true,
+      "down": {
+        "x": 81,
+        "y": 44,
+        "width": 36,
+        "height": 5
+      },
+      "right": {
+        "x": 91,
+        "y": 36,
+        "width": 26,
+        "height": 8
+      }
+    }
+  }
+]

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .wrapper {
+            position: relative;
+        }
+        .wrapper .root {
+            position: absolute;
+        }
+        .wrapper .block {
+            position: absolute;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper"></div>
+<script type="text/javascript" src="../../node_modules/underscore/underscore.js"></script>
+<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript">
+    var wrapper = document.querySelector('.wrapper');
+    var layout = new FlexLayout();
+//    var layout = new Layout();
+
+    var roots = _.sortBy(layout.roots, function(root) {
+        return root.index;
+    });
+    _.each(roots, function(root) {
+        console.log(root.width, root.height, root.x, root.y);
+        var div = document.createElement('div');
+        div.className = 'root';
+        div.style.width = root.width + 'px';
+        div.style.height = root.height + 'px';
+        div.style.backgroundColor = '#' + root.index + root.index + root.index;
+        div.style.left = root.x + 'px';
+        div.style.top = root.y + 'px';
+        wrapper.appendChild(div);
+    });
+
+    var rootDiv = wrapper.childNodes;
+    _.each(layout.blocks, function(block) {
+        console.log(block.width, block.height, block.fit.x, block.fit.y, block.fit.index);
+        var root = rootDiv[block.fit.index],
+            div = document.createElement('div');
+        div.className = 'block';
+        div.style.width = block.width + 'px';
+        div.style.height = block.height + 'px';
+        div.style.backgroundColor = 'rgb(' + _.random(0, 255) + ', ' + _.random(0, 255) + ', ' + _.random(0, 255) + ')';
+        div.style.left = (block.fit.x - roots[block.fit.index].x) + 'px';
+        div.style.top = (block.fit.y - roots[block.fit.index].y) + 'px';
+        root.appendChild(div);
+    });
+</script>
+
+</body>
+</html>

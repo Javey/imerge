@@ -70,6 +70,7 @@ var point = {
 
 var root0 = {
         index: 0,
+        type: 'root',
         get x() {
             return 0;
         },
@@ -207,21 +208,31 @@ FlexLayout.prototype = {
 
     init: function() {
         this.blocks = [
-            {width: 154, height:183},
-            {width: 125, height:182},
-            {width: 180, height:33},
+//            {width: 154, height:183},
+//            {width: 125, height:182},
+//            {width: 180, height:33},
 //            {width: 62, height:176},
-//            {width: 172, height:156}
+//            {width: 43, height:156},
+//            {width: 172, height:36},
+//            {width: 123, height:34},
+//            {width: 142, height:12},
+//
+//            {"width":191,"height":143},
+//            {"width":154,"height":183},
+//            {"width":125,"height":182},
+//            {"width":180,"height":33},{"width":180,"height":43},{"width":62,"height":176}
         ];
-//        var self = this;
-//        _.each(_.range(10), function() {
-//            self.blocks.push({
-//                width: _.random(1, 200),
-//                height: _.random(1, 200)
-//            })
-//        });
+        var self = this;
+        _.each(_.range(100), function() {
+            self.blocks.push({
+                width: _.random(1, 100),
+                height: _.random(1, 100)
+            })
+        });
         this.sort();
         this.resetFirstRoot();
+        this.spaces = [this.roots[0], this.roots[1], this.roots[2], this.roots[3]];
+//        this.spaces = [this.roots[0]];
         this.fit();
     },
 
@@ -242,16 +253,20 @@ FlexLayout.prototype = {
 
         this.blocks.sort(sort);
         this.roots.sort(sort);
-        console.log(this.blocks, this.roots);
+//        console.log(this.blocks, this.roots);
     },
 
     fit: function() {
         _.each(this.blocks, _.bind(function(block) {
             var node;
-            if (node = this.findNode(this.roots, block.width, block.height)) {
+            if (node = this.findNode(block.width, block.height)) {
+//                console.log(node);
                 block.fit = this.splitNode(node, block.width, block.height);
+//                console.log(block);
             } else {
+                console.log('not found');
                 block.fit = this.growNode(block.width, block.height);
+                console.log(block, block.fit);
             }
         }, this));
 //        console.log(this.blocks);
@@ -269,58 +284,160 @@ FlexLayout.prototype = {
         }
     },
 
-    findNode: function(roots, width, height) {
-        roots = [roots[0]];
-        var find = function(root, width, height) {
-            if (root.used) {
-                return find(root.right, width, height) || find(root.down, width, height);
-            } else if (width <= root.width && height <= root.height) {
-                return root;
+    findNode: function(width, height) {
+        var spaces = this.spaces,
+            self = this;
+        var find = function(space, width, height, index) {
+            if (width <= space.width && height <= space.height) {
+                self.spaces.splice(index, 1);
+                return space;
             } else {
                 return null;
             }
         };
-        var ret;
-        _.find(roots, function(root) {
-            ret = find(root, width, height);
+        var ret = null;
+        _.find(spaces, function(space, index) {
+            ret = find(space, width, height, index);
             return ret;
         });
         return ret;
     },
 
-    splitNode: function(node, width, height) {
-        node.used = true;
-        node.down = {
-            index: node.index,
+    splitNode: function(space, width, height) {
+        var ret =  {
+            index: space.index,
             get x() {
-                return node.x;
+                return space.x;
             },
             get y() {
-                return node.y + width;
+                return space.y;
             },
-            get width() {
-                return node.width;
-            },
-            get height() {
-                return node.height - height;
-            }
+            width: width,
+            height: height
         };
-        node.right = {
-            index: node.index,
-            get x() {
-                return node.x + width;
-            },
-            get y() {
-                return node.y;
-            },
-            get width() {
-                return node.width - width;
-            },
-            get height() {
-                return height;
+
+        var newSpaces = this.splitSpace(space, ret),
+            spaces = [];
+        _.each(this.spaces, _.bind(function(space) {
+            var overlap;
+            if (space.index === ret.index && (overlap = this.overlap(space, ret))) {
+                console.log('index: ', space.index, ret.index);
+                newSpaces = newSpaces.concat(this.splitSpace(space, overlap));
+            } else {
+                spaces.push(space);
             }
-        };
-        return node;
+        }, this));
+        this.spaces = spaces.concat(newSpaces);
+        this.mergeSpace();
+        return ret;
+    },
+
+    mergeSpace: function() {
+        for (var i = 0; i < this.spaces.length; i++) {
+            var spaceA = this.spaces[i];
+            for (var j = 0; j < this.spaces.length; j++) {
+                var spaceB = this.spaces[j];
+                if (i === j || spaceA.index !== spaceB.index) continue;
+
+                var merged = false;
+                if (spaceA.x === spaceB.x && spaceA.width === spaceB.width && spaceA.y <= spaceB.y && spaceA.y + spaceA.height >= spaceB.y) {
+                    if (spaceA.height < spaceB.y + spaceB.height - spaceA.y) {
+                        spaceA.__defineGetter__('height', _.bind(function(spaceA, spaceB) {
+                            return spaceB.y + spaceB.height - spaceA.y;
+                        }, this, spaceA, spaceB));
+                    }
+                    merged = true;
+                }
+
+                if (spaceA.y === spaceB.y && spaceA.height === spaceB.height && spaceA.x <= spaceB.x && spaceA.x + spaceA.width >= spaceB.x) {
+                    if (spaceA.width < spaceB.x + spaceB.width - spaceA.x) {
+                        spaceA.__defineGetter__('height', _.bind(function(spaceA, spaceB) {
+                            return spaceB.y + spaceB.height - spaceA.y;
+                        }, this, spaceA, spaceB));
+                    }
+                    merged = true;
+                }
+
+                if (merged) {
+                    this.spaces.splice(j, 1);
+                    if (j < i) {
+                        i--;
+                    }
+                    j--;
+                }
+            }
+        }
+    },
+
+    splitSpace: function(space, overlap) {
+        var ret = [];
+        if (space.y !== overlap.y) {
+            ret.push({
+                index: space.index,
+                get x() {
+                    return space.x;
+                },
+                get y() {
+                    return space.y;
+                },
+                get width() {
+                    return space.width;
+                },
+                get height() {
+                    return overlap.y - space.y;
+                }
+            });
+        }
+        if (space.x !== overlap.x) {
+            ret.push({
+                index: space.index,
+                get x() {
+                    return space.x;
+                },
+                get y() {
+                    return space.y;
+                },
+                get width() {
+                    return overlap.x - space.x;
+                },
+                get height() {
+                    return space.height;
+                }
+            });
+        }
+        ret.push(
+            {
+                index: space.index,
+                get x() {
+                    return space.x;
+                },
+                get y() {
+                    return overlap.y + overlap.height;
+                },
+                get width() {
+                    return space.width;
+                },
+                get height() {
+                    return space.y + space.height - overlap.y - overlap.height;
+                }
+            },
+            {
+                index: space.index,
+                get x() {
+                    return overlap.x + overlap.width;
+                },
+                get y() {
+                    return space.y;
+                },
+                get width() {
+                    return space.x + space.width - overlap.x - overlap.width;
+                },
+                get height() {
+                    return space.height;
+                }
+            }
+        );
+        return ret;
     },
 
     growNode: function(width, height) {
@@ -339,111 +456,68 @@ FlexLayout.prototype = {
         } else if (canGrowDown) {
             return this.growDown(width, height);
         } else {
+            console.log('grow');
             return null;
         }
     },
 
     growRight: function(width, height) {
-//        this.roots[0].width += width;
-        var root = utils.extend({}, this.roots[0]),
-            rootWidth = root.width;
-        root.width += width;
-        this.roots[0] = {
-            index: root.index,
-            used: true,
-            get x() {
-                return root.x;
-            },
-            get y() {
-                return root.y;
-            },
-            get width() {
-                return root.width;
-            },
-            set width(value) {
-                root.width = value;
-            },
-            get height() {
-                return root.height;
-            },
-            set height(value) {
-                root.height = value;
-            },
-            down: root,
-            right: {
-                index: root.index,
-                get x() {
-                    return root.x + rootWidth;
-                },
-                get y() {
-                    return root.y;
-                },
-                get width() {
-                    return width;
-                },
-                get height() {
-                    return root.height;
-                }
-            }
-        };
+        this.roots[0].width += width;
         var node;
-        if (node = this.findNode([this.roots[0]], width, height)) {
+        if (node = this.findNode(width, height)) {
             return this.splitNode(node, width, height);
         } else {
+            console.log('right');
             return null;
         }
     },
 
     growDown: function(width, height) {
-        var root = utils.extend({}, this.roots[0]),
-            rootHeight = root.height;
-        root.height += height;
-        this.roots[0] = {
-            index: root.index,
-            used: true,
-            get x() {
-                return root.x;
-            },
-            get y() {
-                return root.y;
-            },
-            get width() {
-                return root.width;
-            },
-            set width(value) {
-                root.width = value;
-            },
-            get height() {
-                return root.height;
-            },
-            set height(value) {
-                root.height = value;
-            },
-            down: {
-                index: root.index,
-                test: root.y + rootHeight,
-                get x() {
-                    return root.x;
-                },
-                get y() {
-                    return root.y + rootHeight;
-                },
-                get width() {
-                    return root.width;
-                },
-                get height() {
-                    return height;
-                }
-            },
-            right: root
-        };
+        this.roots[0].height += height;
         var node;
-        if (node = this.findNode([this.roots[0]], width, height)) {
-            console.log(node, node.y);
+        if (node = this.findNode(width, height)) {
             return this.splitNode(node, width, height);
         } else {
+            console.log('down');
             return null;
         }
+    },
+
+    overlap: function(spaceA, spaceB) {
+        var overlapRect = null,
+            xa = spaceA.x,
+            xb = spaceB.x,
+            ya = spaceA.y,
+            yb = spaceB.y,
+            wa = spaceA.width,
+            wb = spaceB.width,
+            ha = spaceA.height,
+            hb = spaceB.height,
+            x1 = Math.max(xa, xb),
+            y1 = Math.max(ya, yb),
+            x2 = Math.min(xa + wa, xb + wb),
+            y2 = Math.min(ya + ha, yb + hb);
+        if (x1 < x2 && y1 < y2) {
+            overlapRect = {
+                width: x2 - x1,
+                height: y2 - y1
+            };
+            overlapRect.__defineGetter__('x', (function() {
+                return xa > xb ? function() {
+                    return spaceA.x;
+                } : function() {
+                    return spaceB.x;
+                }
+            }()));
+            overlapRect.__defineGetter__('y', (function() {
+                return ya > yb ? function() {
+                    return spaceA.y;
+                } : function() {
+                    return spaceB.y;
+                }
+            }()));
+        }
+        return overlapRect;
     }
 
 };

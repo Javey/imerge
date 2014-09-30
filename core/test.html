@@ -18,17 +18,21 @@
 <body>
 <div class="wrapper"></div>
 <script type="text/javascript" src="lodash.js"></script>
-<script type="text/javascript" src="layout.js"></script>
+<script type="text/javascript" src="layout2.js"></script>
+<script type="text/javascript" src="../node_modules/benchmark/benchmark.js"></script>
 <script type="text/javascript">
     var wrapper = document.querySelector('.wrapper');
+    var t1 = new Date().getTime();
     var layout = new FlexLayout();
+    var t2 = new Date().getTime();
+    console.log('time: ', t2 - t1);
 //    var layout = new Layout();
 
     var roots = _.sortBy(layout.roots, function(root) {
         return root.index;
     });
     _.each(roots, function(root) {
-        console.log(root.width, root.height, root.x, root.y);
+//        console.log(root.width, root.height, root.x, root.y);
         var div = document.createElement('div');
         div.className = 'root';
         div.style.width = root.width + 'px';
@@ -41,7 +45,7 @@
 
     var rootDiv = wrapper.childNodes;
     _.each(layout.blocks, function(block) {
-        console.log(block.width, block.height, block.fit.x, block.fit.y, block.fit.index);
+//        console.log(block.width, block.height, block.fit.x, block.fit.y, block.fit.index);
         var root = rootDiv[block.fit.index],
             div = document.createElement('div');
         div.className = 'block';

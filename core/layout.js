@@ -1,4 +1,4 @@
-//var _ = require('underscore');
+var _ = require('lodash');
 var utils = {
     extend: function(obj) {
         _.each(Array.prototype.slice.call(arguments, 1), function(source) {
@@ -12,7 +12,7 @@ var utils = {
     }
 };
 
-var module = {};
+//var module = {};
 //var FixedLayout = function(blocks, root, direction) {
 //    this.bocks = blocks;
 //    this.root = root;
@@ -171,7 +171,11 @@ var FlexLayout = module.exports = function(blocks) {
             border: 50
         }
     };
-    this.init();
+    //console.log('123123')
+    if (!blocks) {
+        //console.log('123123')
+        this.init();
+    }
 };
 
 FlexLayout.prototype = {
@@ -222,6 +226,7 @@ FlexLayout.prototype = {
 //            {"width":125,"height":182},
 //            {"width":180,"height":33},{"width":180,"height":43},{"width":62,"height":176}
         ];
+        //this.blocks = [{"width":58,"height":100,"fit":{"index":0,"x":0,"y":0,"width":58,"height":100}},{"width":33,"height":100,"fit":{"index":1,"x":500,"y":0,"width":33,"height":100}},{"width":85,"height":100,"fit":{"index":3,"x":0,"y":478,"width":85,"height":100}},{"width":65,"height":99,"fit":{"index":0,"x":58,"y":0,"width":65,"height":99}},{"width":4,"height":99,"fit":{"index":2,"x":500,"y":478,"width":4,"height":99}},{"width":85,"height":98,"fit":{"index":3,"x":85,"y":478,"width":85,"height":98}},{"width":97,"height":91,"fit":{"index":0,"x":123,"y":0,"width":97,"height":91}},{"width":97,"height":3,"fit":{"index":0,"x":123,"y":91,"width":97,"height":3}},{"width":96,"height":35,"fit":{"index":0,"x":0,"y":100,"width":96,"height":35}},{"width":20,"height":96,"fit":{"index":2,"x":504,"y":478,"width":20,"height":96}}];
         var self = this;
         _.each(_.range(100), function() {
             self.blocks.push({
@@ -232,7 +237,7 @@ FlexLayout.prototype = {
         this.sort();
         this.resetFirstRoot();
         this.spaces = [this.roots[0], this.roots[1], this.roots[2], this.roots[3]];
-//        this.spaces = [this.roots[0]];
+        //this.spaces = [this.roots[0]];
         this.fit();
     },
 
@@ -264,9 +269,9 @@ FlexLayout.prototype = {
                 block.fit = this.splitNode(node, block.width, block.height);
 //                console.log(block);
             } else {
-                console.log('not found');
+                //console.log('not found');
                 block.fit = this.growNode(block.width, block.height);
-                console.log(block, block.fit);
+                //console.log(block, block.fit);
             }
         }, this));
 //        console.log(this.blocks);
@@ -321,7 +326,6 @@ FlexLayout.prototype = {
         _.each(this.spaces, _.bind(function(space) {
             var overlap;
             if (space.index === ret.index && (overlap = this.overlap(space, ret))) {
-                console.log('index: ', space.index, ret.index);
                 newSpaces = newSpaces.concat(this.splitSpace(space, overlap));
             } else {
                 spaces.push(space);
@@ -522,259 +526,259 @@ FlexLayout.prototype = {
 
 };
 
-var Layout = module.exports = function(blocks, direction) {
-    this.blocks = [];
-    var self = this;
-    _.each(_.range(10), function() {
-        self.blocks.push({
-            width: _.random(1, 200),
-            height: _.random(1, 200)
-        })
-    });
-    this.init();
-};
-
-Layout.prototype = {
-    constructor: Layout,
-
-    init: function() {
-        this.blocks.sort(function(a, b) {
-            var maxA = Math.max(a.width, a.height),
-                maxB = Math.max(b.width, b.height);
-            return maxB - maxA;
-        });
-        var blocks = this.blocks,
-            length = blocks.length,
-            width = length > 0 ? blocks[0].width : 0,
-            height = length > 0 ? blocks[0].height : 0;
-        this.root = { x: 0, y: 0, width: width, height: height };
-        this.roots = [this.root];
-        for (var i = 0; i < length; i++) {
-            var block = blocks[i],
-                node;
-            if (node = this.findNode(this.root, block.width, block.height)) {
-                block.fit = this.splitNode(node, block.width, block.height);
-            } else {
-                block.fit = this.growNode(block.width, block.height);
-            }
-        }
-    },
-
-    init2: function() {
-        this.sort();
-//        this.root = {x: 0, y: 0, width: ret.width, height: ret.height};
-
-    },
-
-    init3: function() {
-        new FlexLayout(this.blocks);
-    },
-
-    sort: function() {
-        var groups = {};
-        this.blocks.forEach(function(block) {
-            var float = block.float;
-            if (!groups[float]) {
-                groups[float] = [];
-            }
-            groups[float].push(block);
-        });
-        var maxLeft = _.max(groups.left, function(block) {
-                return block.width;
-            }),
-            maxRight = _.max(groups.right, function(block) {
-                return block.width;
-            }),
-            maxTop = _.max(groups.top, function(block) {
-                return block.height;
-            }),
-            maxBottom = _.max(groups.bottom, function(block) {
-                return block.height;
-            }),
-
-            reduceTopWidth = _.reduce(groups.top, function(meno, block) {
-                return meno + block.width;
-            }, 0),
-            reduceBottomWidth = _.reduce(groups.bottom, function(meno, block) {
-                return meno + block.width;
-            }, 0),
-            reduceLeftHeight = _.reduce(groups.left, function(meno, block) {
-                return meno + block.height;
-            }, 0),
-            reduceRightHeight = _.reduce(groups.right, function(meno, block) {
-                return meno + block.height;
-            }, 0);
-
-        this.root = this.resizeRoot({
-            maxLeftWidth: maxLeft.width,
-            maxRightWidth: maxRight.width,
-            maxTopHeight: maxTop.height,
-            maxBottomHeight: maxBottom.height,
-            reduceTopWidth: reduceTopWidth,
-            reduceBottomWidth: reduceBottomWidth,
-            reduceLeftHeight: reduceLeftHeight,
-            reduceRightHeight: reduceRightHeight
-        });
-
-        var self = this;
-        _.each(groups, function(value, key) {
-            if (key !== 'none') {
-                new FixedLayout(value, self.root[key], (key === 'left' || key === 'right') ? 'vertical' : 'horizontal');
-            }
-        });
-
-    },
-
-    resizeRoot: function(data) {
-        var maxLeftWidth = data.maxLeftWidth,
-            maxRightWidth = data.maxRightWidth,
-            maxTopHeight = data.maxTopHeight,
-            maxBottomHeight = data.maxBottomHeight,
-            reduceTopWidth = data.reduceTopWidth,
-            reduceBottomWidth = data.reduceBottomWidth,
-            reduceLeftHeight = data.reduceLeftHeight,
-            reduceRightHeight = data.reduceRightHeight,
-            reduceWidth = reduceTopWidth + reduceBottomWidth,
-            reduceHeight = reduceLeftHeight + reduceRightHeight,
-            width = maxLeftWidth + maxRightWidth + reduceWidth,
-            height = maxTopHeight + maxBottomHeight + reduceHeight;
-
-        return {
-            x: 0,
-            y: 0,
-            width: width,
-            height: height,
-            leftTop: {
-                x: 0,
-                y: 0,
-                width: maxLeftWidth,
-                height: maxTopHeight
-            },
-            top: {
-                x: maxLeftWidth,
-                y: 0,
-                width: reduceTopWidth,
-                height: maxTopHeight
-            },
-            rightTop: {
-                x: maxLeftWidth + reduceWidth,
-                y: 0,
-                width: maxRightWidth,
-                height: maxTopHeight
-            },
-            left: {
-                x: 0,
-                y: maxTopHeight,
-                width: maxLeftWidth,
-                height: reduceLeftHeight
-            },
-            right: {
-                x: maxLeftWidth + reduceWidth,
-                y: maxTopHeight + reduceLeftHeight,
-                width: maxRightWidth,
-                height: reduceRightHeight
-            },
-            leftBottom: {
-                x: 0,
-                y: maxTopHeight + reduceHeight,
-                width: maxLeftWidth,
-                height: maxBottomHeight
-            },
-            bottom: {
-                x: maxLeftWidth + reduceTopWidth,
-                y: maxTopHeight + reduceHeight,
-                width: reduceBottomWidth,
-                height: maxBottomHeight
-            },
-            rightBottom: {
-                x: maxLeftWidth + reduceWidth,
-                y: maxTopHeight + reduceHeight,
-                width: maxRightWidth,
-                height: maxBottomHeight
-            }
-        };
-    },
-
-    findNode: function(root, width, height) {
-        if (root.used) {
-            return this.findNode(root.right, width, height) || this.findNode(root.down, width, height);
-        } else if (width <= root.width && height <= root.height) {
-            return root;
-        } else {
-            return null;
-        }
-    },
-
-    splitNode: function(node, width, height) {
-        node.used = true;
-        node.down = {x: node.x, y: node.y + height, width: node.width, height: node.height - height};
-        node.right = {x: node.x + width, y: node.y, width: node.width - width, height: height};
-        return node;
-    },
-
-    growNode: function(width, height) {
-        var root = this.root,
-            canGrowDown = width <= root.width,
-            canGrowRight = height <= root.height,
-            shouldGrowRight = canGrowRight && root.height >= root.width + width,
-            shouldGrowDown = canGrowDown && root.width >= root.height + height;
-
-        if (shouldGrowRight) {
-            return this.growRight(width, height);
-        } else if (shouldGrowDown) {
-            return this.growDown(width, height);
-        } else if (canGrowRight) {
-            return this.growRight(width, height);
-        } else if (canGrowDown) {
-            return this.growDown(width, height);
-        } else {
-            return null;
-        }
-    },
-
-    growRight: function(width, height) {
-        this.root = {
-            used: true,
-            x: 0,
-            y: 0,
-            width: this.root.width + width,
-            height: this.root.height,
-            down: this.root,
-            right: {
-                x: this.root.width,
-                y: 0,
-                width: width,
-                height: this.root.height
-            }
-        };
-        var node;
-        if (node = this.findNode(this.root, width, height)) {
-            return this.splitNode(node, width, height);
-        } else {
-            return null;
-        }
-    },
-
-    growDown: function(width, height) {
-        this.root = {
-            used: true,
-            x: 0,
-            y: 0,
-            width: this.root.width,
-            height: this.root.height + height,
-            down: {
-                x: 0,
-                y: this.root.height,
-                width: this.root.width,
-                height: height
-            },
-            right: this.root
-        };
-        var node;
-        if (node = this.findNode(this.root, width, height)) {
-            return this.splitNode(node, width, height);
-        } else {
-            return null;
-        }
-    }
-};
+//var Layout = module.exports = function(blocks, direction) {
+//    this.blocks = [];
+//    var self = this;
+//    _.each(_.range(10), function() {
+//        self.blocks.push({
+//            width: _.random(1, 200),
+//            height: _.random(1, 200)
+//        })
+//    });
+//    this.init();
+//};
+//
+//Layout.prototype = {
+//    constructor: Layout,
+//
+//    init: function() {
+//        this.blocks.sort(function(a, b) {
+//            var maxA = Math.max(a.width, a.height),
+//                maxB = Math.max(b.width, b.height);
+//            return maxB - maxA;
+//        });
+//        var blocks = this.blocks,
+//            length = blocks.length,
+//            width = length > 0 ? blocks[0].width : 0,
+//            height = length > 0 ? blocks[0].height : 0;
+//        this.root = { x: 0, y: 0, width: width, height: height };
+//        this.roots = [this.root];
+//        for (var i = 0; i < length; i++) {
+//            var block = blocks[i],
+//                node;
+//            if (node = this.findNode(this.root, block.width, block.height)) {
+//                block.fit = this.splitNode(node, block.width, block.height);
+//            } else {
+//                block.fit = this.growNode(block.width, block.height);
+//            }
+//        }
+//    },
+//
+//    init2: function() {
+//        this.sort();
+////        this.root = {x: 0, y: 0, width: ret.width, height: ret.height};
+//
+//    },
+//
+//    init3: function() {
+//        new FlexLayout(this.blocks);
+//    },
+//
+//    sort: function() {
+//        var groups = {};
+//        this.blocks.forEach(function(block) {
+//            var float = block.float;
+//            if (!groups[float]) {
+//                groups[float] = [];
+//            }
+//            groups[float].push(block);
+//        });
+//        var maxLeft = _.max(groups.left, function(block) {
+//                return block.width;
+//            }),
+//            maxRight = _.max(groups.right, function(block) {
+//                return block.width;
+//            }),
+//            maxTop = _.max(groups.top, function(block) {
+//                return block.height;
+//            }),
+//            maxBottom = _.max(groups.bottom, function(block) {
+//                return block.height;
+//            }),
+//
+//            reduceTopWidth = _.reduce(groups.top, function(meno, block) {
+//                return meno + block.width;
+//            }, 0),
+//            reduceBottomWidth = _.reduce(groups.bottom, function(meno, block) {
+//                return meno + block.width;
+//            }, 0),
+//            reduceLeftHeight = _.reduce(groups.left, function(meno, block) {
+//                return meno + block.height;
+//            }, 0),
+//            reduceRightHeight = _.reduce(groups.right, function(meno, block) {
+//                return meno + block.height;
+//            }, 0);
+//
+//        this.root = this.resizeRoot({
+//            maxLeftWidth: maxLeft.width,
+//            maxRightWidth: maxRight.width,
+//            maxTopHeight: maxTop.height,
+//            maxBottomHeight: maxBottom.height,
+//            reduceTopWidth: reduceTopWidth,
+//            reduceBottomWidth: reduceBottomWidth,
+//            reduceLeftHeight: reduceLeftHeight,
+//            reduceRightHeight: reduceRightHeight
+//        });
+//
+//        var self = this;
+//        _.each(groups, function(value, key) {
+//            if (key !== 'none') {
+//                new FixedLayout(value, self.root[key], (key === 'left' || key === 'right') ? 'vertical' : 'horizontal');
+//            }
+//        });
+//
+//    },
+//
+//    resizeRoot: function(data) {
+//        var maxLeftWidth = data.maxLeftWidth,
+//            maxRightWidth = data.maxRightWidth,
+//            maxTopHeight = data.maxTopHeight,
+//            maxBottomHeight = data.maxBottomHeight,
+//            reduceTopWidth = data.reduceTopWidth,
+//            reduceBottomWidth = data.reduceBottomWidth,
+//            reduceLeftHeight = data.reduceLeftHeight,
+//            reduceRightHeight = data.reduceRightHeight,
+//            reduceWidth = reduceTopWidth + reduceBottomWidth,
+//            reduceHeight = reduceLeftHeight + reduceRightHeight,
+//            width = maxLeftWidth + maxRightWidth + reduceWidth,
+//            height = maxTopHeight + maxBottomHeight + reduceHeight;
+//
+//        return {
+//            x: 0,
+//            y: 0,
+//            width: width,
+//            height: height,
+//            leftTop: {
+//                x: 0,
+//                y: 0,
+//                width: maxLeftWidth,
+//                height: maxTopHeight
+//            },
+//            top: {
+//                x: maxLeftWidth,
+//                y: 0,
+//                width: reduceTopWidth,
+//                height: maxTopHeight
+//            },
+//            rightTop: {
+//                x: maxLeftWidth + reduceWidth,
+//                y: 0,
+//                width: maxRightWidth,
+//                height: maxTopHeight
+//            },
+//            left: {
+//                x: 0,
+//                y: maxTopHeight,
+//                width: maxLeftWidth,
+//                height: reduceLeftHeight
+//            },
+//            right: {
+//                x: maxLeftWidth + reduceWidth,
+//                y: maxTopHeight + reduceLeftHeight,
+//                width: maxRightWidth,
+//                height: reduceRightHeight
+//            },
+//            leftBottom: {
+//                x: 0,
+//                y: maxTopHeight + reduceHeight,
+//                width: maxLeftWidth,
+//                height: maxBottomHeight
+//            },
+//            bottom: {
+//                x: maxLeftWidth + reduceTopWidth,
+//                y: maxTopHeight + reduceHeight,
+//                width: reduceBottomWidth,
+//                height: maxBottomHeight
+//            },
+//            rightBottom: {
+//                x: maxLeftWidth + reduceWidth,
+//                y: maxTopHeight + reduceHeight,
+//                width: maxRightWidth,
+//                height: maxBottomHeight
+//            }
+//        };
+//    },
+//
+//    findNode: function(root, width, height) {
+//        if (root.used) {
+//            return this.findNode(root.right, width, height) || this.findNode(root.down, width, height);
+//        } else if (width <= root.width && height <= root.height) {
+//            return root;
+//        } else {
+//            return null;
+//        }
+//    },
+//
+//    splitNode: function(node, width, height) {
+//        node.used = true;
+//        node.down = {x: node.x, y: node.y + height, width: node.width, height: node.height - height};
+//        node.right = {x: node.x + width, y: node.y, width: node.width - width, height: height};
+//        return node;
+//    },
+//
+//    growNode: function(width, height) {
+//        var root = this.root,
+//            canGrowDown = width <= root.width,
+//            canGrowRight = height <= root.height,
+//            shouldGrowRight = canGrowRight && root.height >= root.width + width,
+//            shouldGrowDown = canGrowDown && root.width >= root.height + height;
+//
+//        if (shouldGrowRight) {
+//            return this.growRight(width, height);
+//        } else if (shouldGrowDown) {
+//            return this.growDown(width, height);
+//        } else if (canGrowRight) {
+//            return this.growRight(width, height);
+//        } else if (canGrowDown) {
+//            return this.growDown(width, height);
+//        } else {
+//            return null;
+//        }
+//    },
+//
+//    growRight: function(width, height) {
+//        this.root = {
+//            used: true,
+//            x: 0,
+//            y: 0,
+//            width: this.root.width + width,
+//            height: this.root.height,
+//            down: this.root,
+//            right: {
+//                x: this.root.width,
+//                y: 0,
+//                width: width,
+//                height: this.root.height
+//            }
+//        };
+//        var node;
+//        if (node = this.findNode(this.root, width, height)) {
+//            return this.splitNode(node, width, height);
+//        } else {
+//            return null;
+//        }
+//    },
+//
+//    growDown: function(width, height) {
+//        this.root = {
+//            used: true,
+//            x: 0,
+//            y: 0,
+//            width: this.root.width,
+//            height: this.root.height + height,
+//            down: {
+//                x: 0,
+//                y: this.root.height,
+//                width: this.root.width,
+//                height: height
+//            },
+//            right: this.root
+//        };
+//        var node;
+//        if (node = this.findNode(this.root, width, height)) {
+//            return this.splitNode(node, width, height);
+//        } else {
+//            return null;
+//        }
+//    }
+//};

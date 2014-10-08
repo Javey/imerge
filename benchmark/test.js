@@ -1,5 +1,6 @@
 var Benchmark = require('benchmark'),
-    Layout = require('../core/layout.js');
+    Layout = require('../core/layout.js'),
+    Layout2 = require('../core/layout2.js');
 
 var suite = new Benchmark.Suite;
 
@@ -8,7 +9,7 @@ suite
         new Layout();
     })
     .add('Imerge#after', function() {
-        new Layout(true);
+        new Layout2();
         //console.log(1, 2)
     })
     .on('cycle', function(e) {

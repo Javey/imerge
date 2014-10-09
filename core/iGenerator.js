@@ -1,5 +1,5 @@
 var Q = require('q'),
-    _ = require('underscore'),
+    _ = require('lodash'),
     css = require('css');
     fs = require('fs-extra');
 
@@ -91,7 +91,10 @@ Generator.prototype = {
     },
 
     _setConfig: function(merge, url, config) {
-        var self = this;
+        if (config.repeat === 'xy') {
+            console.log('舍弃x和y方向同时repeat的图片:' + url);
+            return;
+        }
         if (!this.config[merge]) {
             this.config[merge] = {};
         }
@@ -142,6 +145,8 @@ Generator.prototype = {
             } else if ((temp = self._handleBackgroundPosition(val)) && !_.isEmpty(temp)) {
                 _.extend(ret, temp);
             } else if ((temp = self._handleBackgroundImage(val)) && !_.isEmpty(temp)) {
+                _.extend(ret, temp);
+            } else if ((temp = self._handleBackgroundRepeat(val)) && !_.isEmpty(temp)) {
                 _.extend(ret, temp);
             }
         });
@@ -206,9 +211,14 @@ Generator.prototype = {
         switch (value.toLowerCase()) {
             case 'repeat-x':
                 ret.repeat = 'x';
+                ret.float = 'left';
                 break;
             case 'repeat-y':
                 ret.repeat = 'y';
+                ret.float = 'top';
+                break;
+            case 'repeat':
+                ret.repeat = 'xy';
                 break;
             default:
                 break;

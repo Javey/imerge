@@ -10,6 +10,7 @@
         "fs-extra": "*",
         "glob": "*",
         "css": "*",
-        "blueimp-md5": "*"
+        "blueimp-md5": "*",
+	"jquery": "*"
     }
 }

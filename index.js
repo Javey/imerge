@@ -1,15 +1,16 @@
 var Q = require('q'),
     glob = require('glob'),
-    Generator = require('./core/generator.js'),
-    Writer = require('./core/writer.js');
+    IGenerator = require('./core/iGenerator.js'),
+    IWriter = require('./core/iWriter.js');
 
-var root = '/home/music/Workspace/M3DImerge/test';
+var root = '/home/music/Workspace/lebo-pcweb/music_1-0-200-10_BRANCH/src';
 Q.denodeify(glob)('**/*.css', {cwd: root})
     .then(function(files) {
-        var gen = new Generator(files, root);
+        var gen = new IGenerator(files, root);
         return gen.generate();
     })
     .then(function(data) {
-        var write = new Writer(root);
+        var write = new IWriter(root);
+        console.log(data);
         write.writeConfig(data);
     });

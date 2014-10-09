@@ -3,15 +3,15 @@ var Q = require('q'),
     Canvas = require('canvas'),
     Image = Canvas.Image,
     utils = require('./utils.js'),
-    _ = require('underscore');
+    _ = require('lodash');
 
-var ImImage = module.exports = function(file, config) {
+var IImage = module.exports = function(file, config) {
     this.file = file;
     this.config = config || utils.defaults;
 };
 
-ImImage.prototype = {
-    constructor: ImImage,
+IImage.prototype = {
+    constructor: IImage,
 
     init: function() {
         var self = this;
@@ -42,11 +42,6 @@ ImImage.prototype = {
             height = this.oriHeight + config['padding-top'] + config['padding-bottom'];
 
         var float = config['float'];
-//        if (float === 'left' || float === 'right') {
-//            width = 'unknown';
-//        } else if (float === 'top' || float === 'bottom') {
-//            height = 'unknown';
-//        }
 
         this.width = width;
         this.height = height;

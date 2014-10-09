@@ -1,5 +1,5 @@
-var _ = require('lodash');
-//var module = {};
+//var _ = require('lodash');
+var module = {};
 var utils = {
     extend: function(obj) {
         _.each(Array.prototype.slice.call(arguments, 1), function(source) {
@@ -27,6 +27,13 @@ var point = {
     x2: 100,
     x3: 90
 };
+
+//var point = {
+//    x0: 1,
+//    x1: 1,
+//    x2: 1,
+//    x3: 1
+//};
 
 var root0 = {
         index: 0,
@@ -114,7 +121,7 @@ var root0 = {
         }
     };
 
-//var wrapper = $('.wrapper');
+var wrapper = $('.wrapper');
 
 var FlexLayout = module.exports = function(blocks) {
     this.blocks = blocks;
@@ -153,7 +160,8 @@ FlexLayout.prototype = {
         });
         this.sort();
         this.resetFirstRoot();
-        this.spaces = [this.roots[0], this.roots[1], this.roots[2], this.roots[3]];
+        //this.spaces = [this.roots[0], this.roots[1], this.roots[2], this.roots[3]];
+        this.spaces = Array.prototype.slice.call(this.roots, 0);
 //        this.spaces = [this.roots[0]];
         this._testRoots = _.sortBy(this.roots, function(root) {
             return root.index;
@@ -225,7 +233,7 @@ FlexLayout.prototype = {
     fit: function() {
         this._testBlocks = [];
         _.each(this.blocks, _.bind(function(block) {
-//            this.drawRect();
+            this.drawRect();
             var node;
             if (node = this.findNode(block.width, block.height)) {
 //                console.log(node);
@@ -254,17 +262,24 @@ FlexLayout.prototype = {
     },
 
     findNode: function(width, height) {
-        this._spaceGroup = {right: [], down: []};
-        return _.find(this.spaces, _.bind(function(space, index) {
+        var group = this._spaceGroup = {right: [], down: []},
+            down = group.down,
+            right = group.right,
+            root = this.roots[0],
+            spaces = this.spaces;
+
+        return _.find(spaces, _.bind(function(space, index) {
             if (width <= space.width && height <= space.height) {
-                this.spaces.splice(index, 1);
+                spaces.splice(index, 1);
                 return space;
             }
-            if (width <= space.width && space.y + space.height === this.roots[0].height) {
-                this._spaceGroup.down.push(space);
-            } else if (height <= space.height && space.x + space.width === this.roots[0].width) {
-                this._spaceGroup.right.push(space);
+
+            if (width <= space.width && space.y + space.height === root.height) {
+                down.push(space);
+            } else if (height <= space.height && space.x + space.width === root.width) {
+                right.push(space);
             }
+
             return null;
         }, this));
     },
@@ -290,9 +305,9 @@ FlexLayout.prototype = {
         }, this));
         this.spaces = spaces.concat(newSpaces);
         this.mergeSpace();
-        this.spaces.sort(function(a, b) {
-            return a.x - b.x;
-        });
+        //this.spaces.sort(function(a, b) {
+        //    return a.x - b.x;
+        //});
         return ret;
     },
 
@@ -394,8 +409,8 @@ FlexLayout.prototype = {
         var root = this.roots[0],
             canGrowDown = width <= root.width,
             canGrowRight = height <= root.height,
-            shouldGrowRight = canGrowRight && root.height >= root.width + width,
-            shouldGrowDown = canGrowDown && root.width >= root.height + height;
+            shouldGrowRight = root.height >= root.width + width,
+            shouldGrowDown = root.width >= root.height + height;
 
         if (shouldGrowRight) {
             return this.growRight(width, height);
@@ -466,4 +481,4 @@ FlexLayout.prototype = {
 
 };
 
-//var layout = new FlexLayout();
+var layout = new FlexLayout();

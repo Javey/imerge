@@ -5,24 +5,26 @@ var Q = require('q'),
     utils = require('./utils.js'),
     _ = require('lodash');
 
-var IImage = module.exports = function(file, config) {
+var IImage = module.exports = function(file, config, root) {
     this.file = file;
     this.config = config || utils.defaults;
+    this.root = root || process.cwd();
 };
 
 IImage.prototype = {
     constructor: IImage,
 
     init: function() {
-        var self = this;
-        return Q.denodeify(fs.exists)(this.file)
+        var self = this,
+            file = this.root + this.file;
+        return Q.denodeify(fs.exists)(file)
             .then(function(exists) {
                 if (!exists) {
-                    throw '文件' + self.file + '不存在';
+                    throw '文件' + file + '不存在';
                 }
             }, function() {})
             .then(function() {
-                return Q.denodeify(fs.readFile)(self.file)
+                return Q.denodeify(fs.readFile)(file)
             })
             .then(function(image) {
                 var img = new Image();

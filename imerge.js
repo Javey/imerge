@@ -1,6 +1,7 @@
 var IImage = require('./core/iImage.js'),
     ILayout = require('./core/iLayout.js'),
     IGenerator = require('./core/iGenerator.js'),
+    IReplace = require('./core/iReplace.js'),
     glob = require('glob'),
     Q = require('q'),
     _ = require('lodash'),
@@ -8,31 +9,63 @@ var IImage = require('./core/iImage.js'),
     Image = Canvas.Image,
     fs = require('fs-extra');
 
-var root = '/home/music/Workspace/lebo-pcweb/music_1-0-200-10_BRANCH/src';
-Q.denodeify(glob)('**/*.css', {cwd: root})
+var root = '/home/music/Workspace/lebo-pcweb/music_1-0-200-10_BRANCH/src',
+    cssFiles = [];
+Q.denodeify(glob)('/static/**/*.css', {root: root})
     .then(function(files) {
+        cssFiles = files;
         var gen = new IGenerator(files, root);
         return gen.generate();
     })
     .then(function(config) {
+        console.log();
+        //fs.writeJSONFile(root + '/imerge/sprite.json', config);
+        var allPromises = [],
+            data = {};
         _.each(config, function(value, merge) {
             var promises = [],
                 imageList = [];
             _.each(value, function(conf, path) {
-                var image = new IImage(root + path, conf);
+                var image = new IImage(path, conf, root);
                 imageList.push(image);
                 promises.push(image.init());
             });
-            Q.all(promises).then(function() {
-                return drawSprite(imageList).then(function(canvas) {
-                    fs.writeFile(root + '/imerge/sprite_' + merge + '.png', canvas.toBuffer());
-                }).then(function() {
-                    fs.writeJSONFile(root + '/imerge/sprite_' + merge + '.json', imageList);
+
+            allPromises.push(
+                Q.all(promises).then(function() {
+                    return drawSprite(imageList).then(function(ret) {
+                        var file = '/imerge/sprite_' + merge + '.png',
+                            canvasRoot = ret.layout.root;
+                        fs.writeFile(root + file, ret.canvas.toBuffer());
+                        var conf = {
+                            data: {},
+                            attr: {
+                                file: file,
+                                width: canvasRoot.width,
+                                height: canvasRoot.height
+                            }
+                        };
+                        _.each(imageList, function(image) {
+                            var imageFile = image.file;
+                            delete image.file;
+                            conf.data[imageFile] = image;
+                        });
+                        data[merge] = conf;
+                        fs.writeJSONFile(root + '/imerge/sprite_' + merge + '.json', conf);
+                    })
+                }).catch(function() {
+                    console.log(arguments);
                 })
-            }).catch(function() {
-                console.log(arguments);
-            });
+            );
         });
+        Q.all(allPromises).then(function() {
+            fs.writeJSONFile(root + '/imerge/sprite.json', data);
+            iReplace = new IReplace(cssFiles, data, root);
+            console.log(iReplace);
+            iReplace.process();
+        }).catch(function() {
+            console.log(arguments);
+        })
     })
     .catch(function() {
         console.log(arguments);
@@ -44,7 +77,7 @@ function drawSprite(images) {
         ctx = canvas.getContext('2d'),
         promises = [];
     _.each(images, function(image) {
-        promises.push(Q.denodeify(fs.readFile)(image.file)
+        promises.push(Q.denodeify(fs.readFile)(root + image.file)
             .then(function(source) {
                 var img = new Image(),
                     fit = image.fit,
@@ -60,7 +93,10 @@ function drawSprite(images) {
         );
     });
     return Q.all(promises).then(function() {
-        return canvas;
+        return {
+            canvas: canvas,
+            layout: layout
+        };
     });
 }
 

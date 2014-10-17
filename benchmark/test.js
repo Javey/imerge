@@ -1,6 +1,6 @@
 var Benchmark = require('benchmark'),
-    Layout = require('../core/layout.js'),
-    Layout2 = require('../core/layout2.js');
+    Layout = require('../test/layout.js'),
+    Layout2 = require('../test/layout2.js');
 
 var suite = new Benchmark.Suite;
 

@@ -3,9 +3,8 @@ var Q = require('q'),
     css = require('css');
     fs = require('fs-extra');
 
-var Generator = function(files, root) {
+var Generator = module.exports = function(files, root) {
     this.files = files;
-    this.root = root || process.cwd();
     this.config = {};
     this._position = true;
 };
@@ -25,7 +24,6 @@ Generator.prototype = {
         var self = this,
             promises = [];
         this.files.forEach(function(file) {
-            file = self.root + '/' + file;
             promises.push(Q.denodeify(fs.readFile)(file, 'UTF-8')
                 .then(function(content) {
                     self._parse(content);
@@ -45,7 +43,7 @@ Generator.prototype = {
                 var bgDecls = [],
                     merge = '';
                 rule.declarations.forEach(function(decl) {
-                    if (decl.property && !decl.property.indexOf('background')) {
+                    if (decl.property && ~decl.property.indexOf('background')) {
                         bgDecls.push(decl);
                     } else if (decl.property === 'merge') {
                         merge = decl.value;
@@ -226,5 +224,3 @@ Generator.prototype = {
         return ret;
     }
 };
-
-module.exports = Generator;

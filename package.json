@@ -1,16 +1,17 @@
 {
-    "name": "imerge",
-    "description": "CSS sprite tool",
-    "version": "0.0.1",
-    "author": "Javey <zoujiawei237@gmail.com>",
-    "dependencies": {
-        "canvas": "*",
-        "lodash": "*",
-        "q": "*",
-        "fs-extra": "*",
-        "glob": "*",
-        "css": "*",
-        "blueimp-md5": "*",
-	"jquery": "*"
-    }
+  "name": "imerge",
+  "description": "CSS sprite tool",
+  "version": "0.0.1",
+  "author": "Javey <zoujiawei237@gmail.com>",
+  "dependencies": {
+    "canvas": "*",
+    "lodash": "*",
+    "q": "*",
+    "fs-extra": "*",
+    "glob": "*",
+    "css": "*"
+  },
+  "devDependencies": {
+    "commander": "~2.4.0"
+  }
 }

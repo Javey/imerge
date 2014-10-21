@@ -1,17 +1,18 @@
 {
-  "name": "imerge",
-  "description": "CSS sprite tool",
-  "version": "0.0.1",
-  "author": "Javey <zoujiawei237@gmail.com>",
-  "dependencies": {
-    "canvas": "*",
-    "lodash": "*",
-    "q": "*",
-    "fs-extra": "*",
-    "glob": "*",
-    "css": "*"
-  },
-  "devDependencies": {
-    "commander": "~2.4.0"
-  }
+    "name": "imerge",
+    "description": "CSS sprite tool",
+    "version": "0.0.1",
+    "author": "Javey <zoujiawei237@gmail.com>",
+    "bin": {
+        "imerge": "bin/imerge.js"
+    },
+    "dependencies": {
+        "canvas": "*",
+        "lodash": "*",
+        "q": "*",
+        "fs-extra": "*",
+        "glob": "*",
+        "css": "*",
+        "commander": "~2.4.0"
+    }
 }

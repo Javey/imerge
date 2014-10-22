@@ -9,6 +9,9 @@ A tool for css sprite.
 * Support background-repeat, background-size and even background-position which value is left, right, top and bottom except for center
 * Custom image padding in sprite
 * Custom merge setting
+##Plan
+* Multi image foramts supported.Only support png for now.
+* Auto generate sprite image when you don't customize merge setting.
 
 #Install
 
@@ -24,7 +27,7 @@ For example:
 ```css
 div {
 	background: url('path/to/image.png');
-	merge: sprite
+	merge: sprite;
 }
 ```
 then execute
@@ -32,6 +35,16 @@ then execute
 imerge source dest [options]
 ```
 This will generate css files and sprite images to dest directory.
+
+##Output
+CSS file:
+```css
+div {
+	background: url('path/to/sprite_sprite.png');
+	background-position: 0px 0px;
+}
+```
+Sprite image named `sprite_sprite.png`.
 
 #Options
 ```js

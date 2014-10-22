@@ -20,19 +20,20 @@ npm install -g imerge
 
 Before using the tool, you must to customize merge setting in css files. Just add `merge: value` in css block which has background or background-image declaration.
 
-example:
+For example:
 ```css
 div {
 	background: url('path/to/image.png');
 	merge: sprite
 }
 ```
-then
+then execute
 ```js
 imerge source dest [options]
 ```
-This will generate css files and sprites image to dest directory.
+This will generate css files and sprite images to dest directory.
 
+#Options
 ```js
 options:
 	-h, --help                     output usage information

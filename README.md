@@ -9,7 +9,9 @@ A tool for css sprite.
 * Support background-repeat, background-size and even background-position which value is left, right, top and bottom except for center
 * Custom image padding in sprite
 * Custom merge setting
-##Plan
+
+###Plan
+
 * Multi image foramts supported.Only support png for now.
 * Auto generate sprite image when you don't customize merge setting.
 

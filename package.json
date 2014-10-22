@@ -1,8 +1,12 @@
 {
     "name": "imerge",
     "description": "CSS sprite tool",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "author": "Javey <zoujiawei237@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Javey/imerge.git"
+	},
     "bin": {
         "imerge": "bin/imerge.js"
     },

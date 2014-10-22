@@ -13,6 +13,9 @@
         "fs-extra": "*",
         "glob": "*",
         "css": "*",
-        "commander": "~2.4.0"
+        "commander": "*",
+        "prompt": "*",
+        "chalk": "*",
+        "dateformat": "*"
     }
 }

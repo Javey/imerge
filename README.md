@@ -13,7 +13,7 @@ A tool for css sprite.
 ##Plan
 
 * Multi image foramts supported.Only support png for now.
-* Auto generate sprite image when you don't customize merge setting.
+* Auto generate sprite image when you don't customize merge setting, i.e. conflict detect.
 
 #Install
 
@@ -55,5 +55,6 @@ options:
 	-V, --version                  output the version number
 	-p, --pattern [pattern]        CSS file glob pattern
 	-d, --default-padding [value]  Set default padding value
+	-a, --all                      Process all background images
 ```
 				

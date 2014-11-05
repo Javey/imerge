@@ -24,56 +24,6 @@
 <div class="wrapper"></div>
 <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="lodash.js"></script>
-<script type="text/javascript" src="layout3.js"></script>
-<script type="text/javascript">
-    var float = ['none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
-        'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none',
-        'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'none', 'left', 'right', 'top', 'bottom', 'none', 'none', 'none', 'none'];
-
-    var blocks = [];
-    _.each(_.range(100), function() {
-        blocks.push({
-            width: _.random(1, 100),
-            height: _.random(1, 100),
-            float: float[_.random(0, float.length - 1)]
-        })
-    });
-    var wrapper = document.querySelector('.wrapper');
-    var t1 = new Date().getTime();
-    var layout = new Layout(blocks);
-    var t2 = new Date().getTime();
-    console.log('time: ', t2 - t1);
-//    var layout = new Layout();
-//
-//    roots = _.sortBy(roots, function(root) {
-//        return root.index;
-//    });
-//    _.each(roots, function(root) {
-////        console.log(root.width, root.height, root.x, root.y);
-//        var div = document.createElement('div');
-//        div.className = 'root';
-//        div.style.width = root.width + 'px';
-//        div.style.height = root.height + 'px';
-//        div.style.backgroundColor = '#' + root.index + root.index + root.index;
-//        div.style.left = root.x + 'px';
-//        div.style.top = root.y + 'px';
-//        wrapper.appendChild(div);
-//    });
-//
-//    var rootDiv = wrapper.childNodes;
-    _.each(layout.blocks, function(block) {
-//        console.log(block);
-        var root = wrapper,
-            div = document.createElement('div');
-        div.className = 'block';
-        div.style.width = block.width + 'px';
-        div.style.height = block.height + 'px';
-        div.style.backgroundColor = 'rgb(' + _.random(0, 255) + ', ' + _.random(0, 255) + ', ' + _.random(0, 255) + ')';
-        div.style.left = block.fit.x + 'px';
-        div.style.top = block.fit.y + 'px';
-        root.appendChild(div);
-    });
-</script>
-
+<script type="text/javascript" src="layout.js"></script>
 </body>
 </html>

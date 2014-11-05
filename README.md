@@ -5,7 +5,7 @@ A tool for css sprite.
 
 #Features
 
-* Highly performant
+* Highly performance
 * Support background-repeat, background-size and even background-position which value is left, right, top and bottom except for center
 * Custom image padding in sprite
 * Custom merge setting

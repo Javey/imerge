@@ -9,11 +9,12 @@ A tool for css sprite.
 * Support background-repeat, background-size and even background-position which value is left, right, top and bottom except for center
 * Custom image padding in sprite
 * Custom merge setting
+* Support ie6 hack, i.e. declaration starts with '_'
 
 ##Plan
 
 * Multi image formats are supported.Only support png for now.
-* Auto generate sprite image when you don't customize merge setting, i.e. conflict detect.
+* Auto generate sprite image when you don't customize merge setting, e.g. conflict detect.
 
 #Install
 

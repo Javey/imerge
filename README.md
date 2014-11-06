@@ -12,7 +12,7 @@ A tool for css sprite.
 
 ##Plan
 
-* Multi image formats supported.Only support png for now.
+* Multi image formats are supported.Only support png for now.
 * Auto generate sprite image when you don't customize merge setting, i.e. conflict detect.
 
 #Install
@@ -23,7 +23,7 @@ npm install -g imerge
 
 #Usage
 
-Before using the tool, you must to customize merge setting in css files. Just add `merge: value` in css block which has background or background-image declaration.
+Before using this tool, you must to customize merge setting in css files. Just add `merge: value` in css block which has background or background-image declaration.
 
 For example:
 ```css

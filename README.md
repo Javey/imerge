@@ -12,7 +12,7 @@ A tool for css sprite.
 
 ##Plan
 
-* Multi image foramts supported.Only support png for now.
+* Multi image formats supported.Only support png for now.
 * Auto generate sprite image when you don't customize merge setting, i.e. conflict detect.
 
 #Install
@@ -36,7 +36,7 @@ then execute
 ```js
 imerge source dest [options]
 ```
-This will generate css files and sprite images to dest directory.
+This will generate css files and sprite images to `dest` directory.
 
 ##Output
 CSS file:
@@ -46,7 +46,7 @@ div {
 	background-position: 0px 0px;
 }
 ```
-Sprite image named `sprite_sprite.png`.
+Sprite image is named `sprite_sprite.png`.
 
 #Options
 ```js

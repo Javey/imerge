@@ -1,7 +1,7 @@
 {
     "name": "imerge",
     "description": "CSS sprite tool",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "author": "Javey <zoujiawei237@gmail.com>",
 	"repository": {
 		"type": "git",
@@ -12,7 +12,6 @@
     },
     "main": "lib/imerge.js",
     "dependencies": {
-        "canvas": "*",
         "lodash": "*",
         "q": "*",
         "fs-extra": "*",
@@ -21,6 +20,7 @@
         "commander": "*",
         "prompt": "*",
         "chalk": "*",
-        "dateformat": "*"
+        "dateformat": "*",
+        "images": "*"
     }
 }

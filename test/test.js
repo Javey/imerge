@@ -7,7 +7,7 @@ var imerge = new IMerge({
         padding: 10
     },
     options: {
-        all: true
+        all: false
     }
 });
 imerge.start();

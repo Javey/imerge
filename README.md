@@ -68,6 +68,7 @@ options:
 	-p, --pattern [pattern]        CSS file glob pattern
 	-d, --default-padding [value]  Set default padding value
 	-a, --all                      Process all background images
+	-w, --webroot                  Set webroot path. Default: source path                   
 ```
 
 imerge
@@ -129,5 +130,6 @@ options:
 	-p, --pattern [pattern]        CSS file glob pattern
 	-d, --default-padding [value]  Set default padding value
 	-a, --all                      Process all background images
+	-w, --webroot                  Set webroot path. Default: source path  
 ```
 				

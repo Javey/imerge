@@ -1,0 +1,15 @@
+
+.alpha-1 {
+    background: url(../image/red_1.png);
+    merge: red;
+}
+
+.alpha-2 {
+    background: url(/image/blue_1.png);
+    merge: blue;
+}
+
+.alpha-3 {
+    background-repeat: repeat-x;
+    merge: red;
+}

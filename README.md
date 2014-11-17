@@ -132,4 +132,14 @@ options:
 	-a, --all                      Process all background images
 	-w, --webroot                  Set webroot path. Default: source path  
 ```
+
+#Test
+
+Use mocha as the unit test framwork.
+
+```js
+npm install -g mocha
+// enter project directory
+mocha -w --compilers coffee:coffee-script --recursive  
+```
 				

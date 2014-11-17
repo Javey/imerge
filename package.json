@@ -3,10 +3,10 @@
     "description": "CSS sprite tool",
     "version": "0.2.1",
     "author": "Javey <zoujiawei237@gmail.com>",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Javey/imerge.git"
-	},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Javey/imerge.git"
+    },
     "bin": {
         "imerge": "bin/imerge.js"
     },
@@ -22,5 +22,10 @@
         "chalk": "*",
         "dateformat": "*",
         "images": "*"
+    },
+    "devDependencies": {
+        "mocha": "^2.0.1",
+        "should": "^4.3.0",
+        "sinon": "^1.11.1"
     }
 }

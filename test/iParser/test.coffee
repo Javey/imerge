@@ -107,7 +107,7 @@ describe "iParser", () ->
             parser._handleBackgroundRepeat("repeat-y").should.eql {float: "top", repeat: "y"}
 
         it "repeat", () ->
-            parser._handleBackgroundRepeat("repeat").should.eql {repeat: "xy"}
+            parser._handleBackgroundRepeat("repeat").should.eql {float: "none", repeat: "xy"}
 
 
     describe "#_handleBackgroundPosition", () ->
@@ -169,6 +169,7 @@ describe "iParser", () ->
             .should.eql {
                 url: "/image/red_1.png"
                 repeat: "xy"
+                float: "none"
                 "padding-left": 12
                 "padding-right": 12
                 "padding-top": 13
@@ -204,6 +205,7 @@ describe "iParser", () ->
             config.should.eql {
                 url: "/image/red_1.png"
                 repeat: "xy"
+                float: "none"
                 "padding-left": 12
                 "padding-right": 12
                 "padding-top": 13
@@ -218,6 +220,7 @@ describe "iParser", () ->
             config.should.eql {
                 url: "/image/red_1.png"
                 repeat: "xy"
+                float: "none"
             }
 
 

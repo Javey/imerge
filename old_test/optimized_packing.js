@@ -125,7 +125,7 @@ var wrapper = $('.wrapper');
 
 var FlexLayout = module.exports = function(blocks) {
     this.blocks = blocks;
-    this.roots = [root0, root1, root2, root3];
+    this.roots = [root0];
     this.init();
 };
 

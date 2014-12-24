@@ -141,6 +141,11 @@ iMerge.start();
 }
 ```
 
+## 问题
+
+1. stylus中merge冲突，可以将配置文件改为imerge
+
+
 imerge
 ======
 

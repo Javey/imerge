@@ -61,14 +61,84 @@ imerge source dest -a
 ```
 
 #命令选项
+```
+Options:
+
+    -h, --help                     output usage information
+    -V, --version                  output the version number
+    -p, --pattern [pattern]        CSS file glob pattern
+    -d, --default-padding [value]  Set default padding value
+    -a, --all                      Process all background images
+    -w, --webroot                  Set webroot path. Default: source path
+    -c, --css-to                   CSS output path. The priority is higher than dest
+    -s, --sprite-to                Sprite image output path. The priority is higher than dest
+    -e, --source-context           Source file webroot
+    -t, --output-context           Output file webroot
+```
+
+# 编程
+
+可以将`imerge`当成一个node module进行编程
+
+## 示例
+
+```javascript
+var IMerge = require('IMerge');
+
+var iMerge = new IMerge.Imerge(options, pathFilter);
+iMerge.start();
+```
+
+### options
+
 ```js
-options:
-	-h, --help                     output usage information
-	-V, --version                  output the version number
-	-p, --pattern [pattern]        CSS file glob pattern
-	-d, --default-padding [value]  Set default padding value
-	-a, --all                      Process all background images
-	-w, --webroot                  Set webroot path. Default: source path                   
+{
+	// 扫描css的目录
+	from: '',
+	// 存放处理后的css和sprite image的目录
+	to: '',
+	// 存放处理后的css目录，优先级高于to
+	cssTo: '',
+	// 存放处理后的sprite image目录，优先级高于to
+	spriteTo: '',
+	// 原始css文件中，绝对路径引用image相对的目录
+	sourceContext: '',
+	// 编译后的css文件中，绝对路径引用image相对的目录
+	outputContext: '',
+	// 扫描文件的glob pattern
+	pattern: '/**/*.css',
+	defaults: {
+		// 小图在sprite中间距，类似css的写法
+		padding: null
+	},
+	options: {
+		// 是否扫描所有background background-image，而不用管是否设置了merge属性
+		all: false
+	}
+}
+```
+
+### pathFilter
+
+```js
+{
+	// 图片地址过滤器
+	imagePathFilter: function(file, conf) {
+		return file;
+	},
+	// sprite图片输出路径
+	spriteTo: function(merge) {
+		return path.join(opt.spriteTo, '/spirte_' + merge + '.png');
+	},
+	// sprite图片写回css中地址
+	spritePathFilter: function(file) {
+		return file.replace(opt.outputContext, '');
+	},
+	// 处理后的css存放地址
+	cssTo: function(file) {
+		return path.join(opt.cssTo, path.relative(opt.from, file));
+	}
+}
 ```
 
 imerge
@@ -123,14 +193,20 @@ div {
 Sprite image is named `sprite_sprite.png`.
 
 #Options
-```js
-options:
-	-h, --help                     output usage information
-	-V, --version                  output the version number
-	-p, --pattern [pattern]        CSS file glob pattern
-	-d, --default-padding [value]  Set default padding value
-	-a, --all                      Process all background images
-	-w, --webroot                  Set webroot path. Default: source path  
+
+```
+Options:
+
+    -h, --help                     output usage information
+    -V, --version                  output the version number
+    -p, --pattern [pattern]        CSS file glob pattern
+    -d, --default-padding [value]  Set default padding value
+    -a, --all                      Process all background images
+    -w, --webroot                  Set webroot path. Default: source path
+    -c, --css-to                   CSS output path. The priority is higher than dest
+    -s, --sprite-to                Sprite image output path. The priority is higher than dest
+    -e, --source-context           Source file webroot
+    -t, --output-context           Output file webroot
 ```
 
 #Test

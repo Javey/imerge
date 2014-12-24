@@ -44,31 +44,31 @@ describe "iParser", () ->
                 .then(bind("_filter_bg"))
                 .catch (error) -> console.log error
 
-        it "background", () ->
-            css_str = ".alpha-1 { background: url(../image/red_1.png); merge: red; }"
-
-            filter(css_str).then((result) ->
-                result.should.eql [{
-                    "bgDecls": [{
-                        "type": "declaration",
-                        "property": "background",
-                        "value": "url(../image/red_1.png)",
-                        "position": {
-                            "source": undefined,
-                            "start": {
-                                "line": 1,
-                                "column": 12
-                            },
-                            "end": {
-                                "line": 1,
-                                "column": 47
-                            }
-                        }
-                    }],
-                    "merge": "red",
-                    "isHack": false
-                }]
-            )
+#        it "background", () ->
+#            css_str = ".alpha-1 { background: url(../image/red_1.png); merge: red; }"
+#
+#            filter(css_str).then((result) ->
+#                result.should.eql [{
+#                    "bgDecls": [{
+#                        "type": "declaration",
+#                        "property": "background",
+#                        "value": "url(../image/red_1.png)",
+#                        "position": {
+#                            "source": undefined,
+#                            "start": {
+#                                "line": 1,
+#                                "column": 12
+#                            },
+#                            "end": {
+#                                "line": 1,
+#                                "column": 47
+#                            }
+#                        }
+#                    }],
+#                    "merge": "red",
+#                    "isHack": false
+#                }]
+#            )
 
         it "background-image", () ->
             css_str = ".alpha-1 { background-image: url(../image/red_1.png); merge: red; }"

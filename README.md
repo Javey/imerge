@@ -30,7 +30,7 @@ npm install -g imerge
 ```css
 div {
 	background: url('path/to/image.png');
-	merge: sprite;
+	imerge: sprite;
 }
 ```
 然后执行
@@ -143,7 +143,15 @@ iMerge.start();
 
 ## 问题
 
-1. stylus中merge冲突，可以将配置文件改为imerge
+1. stylus中merge冲突
+
+> 可以将css中的配置声明改为imerge
+> ```css
+> div {
+>	background: url('path/to/image.png');
+>	imerge: sprite;
+> }
+> ```
 
 
 imerge

@@ -69,11 +69,11 @@ Options:
     -p, --pattern [pattern]        CSS file glob pattern
     -d, --default-padding [value]  Set default padding value
     -a, --all                      Process all background images
-    -w, --webroot                  Set webroot path. Default: source path
-    -c, --css-to                   CSS output path. The priority is higher than dest
-    -s, --sprite-to                Sprite image output path. The priority is higher than dest
-    -e, --source-context           Source file webroot
-    -t, --output-context           Output file webroot
+    -w, --webroot [path]           Set webroot path. Default: source path. Deprecated, use --source-context.
+    -c, --css-to [path]            CSS output path. The priority is higher than dest
+    -s, --sprite-to [path]         Sprite image output path. The priority is higher than dest
+    -e, --source-context [path]    Source file webroot
+    -t, --output-context [path]    Output file webroot
 ```
 
 # 编程
@@ -215,11 +215,11 @@ Options:
     -p, --pattern [pattern]        CSS file glob pattern
     -d, --default-padding [value]  Set default padding value
     -a, --all                      Process all background images
-    -w, --webroot                  Set webroot path. Default: source path
-    -c, --css-to                   CSS output path. The priority is higher than dest
-    -s, --sprite-to                Sprite image output path. The priority is higher than dest
-    -e, --source-context           Source file webroot
-    -t, --output-context           Output file webroot
+    -w, --webroot [path]           Set webroot path. Default: source path. Deprecated, use --source-context.
+    -c, --css-to [path]            CSS output path. The priority is higher than dest
+    -s, --sprite-to [path]         Sprite image output path. The priority is higher than dest
+    -e, --source-context [path]    Source file webroot
+    -t, --output-context [path]    Output file webroot
 ```
 
 #Test

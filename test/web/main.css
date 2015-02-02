@@ -1,0 +1,7 @@
+.test {
+    width: 7.5px;
+    height: 7.5px;
+    background: url('test.png') no-repeat;
+    background-size: 7.5px 7.5px;
+    merge: test;
+}

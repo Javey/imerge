@@ -1,31 +1,31 @@
 {
-    "name": "imerge",
-    "description": "CSS sprite tool",
-    "version": "0.2.8",
-    "author": "Javey <zoujiawei237@gmail.com>",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Javey/imerge.git"
-    },
-    "bin": {
-        "imerge": "bin/imerge.js"
-    },
-    "main": "lib/imerge.js",
-    "dependencies": {
-        "lodash": "*",
-        "q": "*",
-        "fs-extra": "*",
-        "glob": "*",
-        "css": "*",
-        "commander": "*",
-        "prompt": "*",
-        "chalk": "*",
-        "dateformat": "*",
-        "images": "*"
-    },
-    "devDependencies": {
-        "mocha": "^2.0.1",
-        "should": "^4.3.0",
-        "sinon": "^1.11.1"
-    }
+  "name": "imerge",
+  "description": "CSS sprite tool",
+  "version": "0.2.9",
+  "author": "Javey <zoujiawei237@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Javey/imerge.git"
+  },
+  "bin": {
+    "imerge": "bin/imerge.js"
+  },
+  "main": "lib/imerge.js",
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "fs-extra": "~0.16.3",
+    "glob": "~4.4.1",
+    "css": "~2.2.0",
+    "commander": "~2.6.0",
+    "prompt": "~0.2.14",
+    "chalk": "~1.0.0",
+    "dateformat": "~1.0.11",
+    "images": "~2.1.1",
+    "q": "~1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1",
+    "should": "^4.3.0",
+    "sinon": "^1.11.1"
+  }
 }

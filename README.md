@@ -85,7 +85,7 @@ Options:
 ```javascript
 var IMerge = require('IMerge');
 
-var iMerge = new IMerge.Imerge(options, pathFilter);
+var iMerge = new IMerge.IMerge(options, pathFilter);
 iMerge.start();
 ```
 

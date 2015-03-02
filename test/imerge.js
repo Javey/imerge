@@ -1,6 +1,6 @@
 var IMerge = require('../lib/imerge');
 
-new IMerge({
+new IMerge.IMerge({
     from: './web',
     to: './build'
 }).start();

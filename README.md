@@ -132,7 +132,7 @@ iMerge.start();
 	},
 	// sprite图片写回css中地址
 	spritePathFilter: function(file) {
-		return file.replace(opt.outputContext, '');
+		return file.replace(opt.outputContext, '').replace(/\\/g, '/');
 	},
 	// 处理后的css存放地址
 	cssTo: function(file) {

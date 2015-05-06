@@ -3,5 +3,10 @@
     height: 7.5px;
     background: url('/test.png') no-repeat;
     background-size: 7.5px 7.5px;
-    merge: test;
+    imerge: test;
+}
+
+.c-icon-compute {
+    background: url("/static/image/icon/resource-hover.png") no-repeat;
+    imerge: test;
 }

@@ -1,7 +1,7 @@
 {
   "name": "imerge",
   "description": "CSS sprite tool",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Javey <zoujiawei237@gmail.com>",
   "repository": {
     "type": "git",

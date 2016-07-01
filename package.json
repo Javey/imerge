@@ -12,15 +12,15 @@
   },
   "main": "lib/imerge.js",
   "dependencies": {
-    "lodash": "~2.4.1",
+    "chalk": "~1.0.0",
+    "commander": "~2.6.0",
+    "css": "~2.2.0",
+    "dateformat": "~1.0.11",
     "fs-extra": "~0.16.3",
     "glob": "~4.4.1",
-    "css": "~2.2.0",
-    "commander": "~2.6.0",
+    "jimp": "^0.2.24",
+    "lodash": "~2.4.1",
     "prompt": "~0.2.14",
-    "chalk": "~1.0.0",
-    "dateformat": "~1.0.11",
-    "images": "~2.1.1",
     "q": "~1.2.0"
   },
   "devDependencies": {
